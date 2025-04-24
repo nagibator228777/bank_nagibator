@@ -5,7 +5,7 @@ This project provides a widget for displaying and processing bank operations dat
 Installation:
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/nagibator228777/bank_nagibator.git
 ```
 
 # Usage:
