@@ -14,3 +14,36 @@ Run main.py:
 ```bash
 python main.py
 ```
+
+# Testing:
+
+### New Test Coverage
+Main application workflow
+
+User input handling
+
+Transaction display formatting
+
+Category statistics calculation
+
+Regex-based search functionality
+
+
+Running Tests:
+```bash
+# Install dependencies
+pip install pytest pytest-cov
+```
+```bash
+# Run all tests
+pytest tests/
+```
+```bash
+# With coverage report
+pytest --cov=src tests/
+```
+```bash
+# HTML coverage report
+pytest --cov=src --cov-report html
+open htmlcov/index.html
+```
