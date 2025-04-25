@@ -13,22 +13,10 @@ def transaction_data() -> list[dict]:  # Аннотация типа для во
     ]
 
 @pytest.fixture
-def sample_transactions():
-    """Фикстура, списка транзакций."""
+def simple_transactions():
     return [
-        {
-            "id": 1,
-            "operationAmount": {"currency": {"code": "USD"}},
-            "description": "USD Transaction 1",
-        },
-        {
-            "id": 2,
-            "operationAmount": {"currency": {"code": "EUR"}},
-            "description": "EUR Transaction 1",
-        },
-        {
-            "id": 3,
-            "operationAmount": {"currency": {"code": "USD"}},
-            "description": "USD Transaction 2",
-        },
+        {"description": "Payment for services"},
+        {"description": "Grocery shopping"},
+        {"description": "Monthly subscription"},
+        {"description": "Transfer to account"},
     ]
