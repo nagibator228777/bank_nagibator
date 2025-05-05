@@ -1,14 +1,15 @@
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
+from src.external_api import calculate_transaction_amount
 from src.processing import (
+    count_transactions_by_category,
     filter_by_state,
     sort_by_date,
-    count_transactions_by_category,
 )
 from src.regex_utils import filter_transactions_by_description
 from src.transaction_reader import csv_to_list, xlsx_to_list
 from src.utils import load_transactions
-from src.widget import mask_account_card, get_date
-from src.external_api import calculate_transaction_amount
+from src.widget import get_date, mask_account_card
 
 
 def print_transaction(transaction: Dict[str, Any]) -> None:
@@ -69,10 +70,7 @@ def main_menu() -> None:
 def process_transactions(transactions: List[Dict[str, Any]]) -> None:
     """Обрабатывает и фильтрует транзакции по выбору пользователя."""
     valid_states = ["executed", "canceled", "pending"]
-    state = get_user_choice(
-        "Введите статус для фильтрации (executed/canceled/pending): ",
-        valid_states
-    ).upper()
+    state = get_user_choice("Введите статус для фильтрации (executed/canceled/pending): ", valid_states).upper()
 
     filtered = filter_by_state(transactions, state)
     print(f"\nНайдено {len(filtered)} операций со статусом {state}.")
@@ -81,15 +79,11 @@ def process_transactions(transactions: List[Dict[str, Any]]) -> None:
         return
 
     if get_user_choice("Отсортировать по дате? (да/нет): ", ["да", "нет"]) == "да":
-        order = get_user_choice(
-            "По возрастанию или убыванию? (возрастанию/убыванию): ",
-            ["возрастанию", "убыванию"]
-        )
+        order = get_user_choice("По возрастанию или убыванию? (возрастанию/убыванию): ", ["возрастанию", "убыванию"])
         filtered = sort_by_date(filtered, order == "убыванию")
 
     if get_user_choice("Только рублевые транзакции? (да/нет): ", ["да", "нет"]) == "да":
-        filtered = [tx for tx in filtered
-                    if tx.get("operationAmount", {}).get("currency", {}).get("code") == "RUB"]
+        filtered = [tx for tx in filtered if tx.get("operationAmount", {}).get("currency", {}).get("code") == "RUB"]
 
     if get_user_choice("Фильтровать по описанию? (да/нет): ", ["да", "нет"]) == "да":
         search_term = input("Введите текст для поиска: ")

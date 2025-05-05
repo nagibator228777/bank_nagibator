@@ -34,6 +34,7 @@ def sample_transactions():
         },
     ]
 
+
 @pytest.fixture
 def simple_transactions():
     return [
@@ -42,6 +43,7 @@ def simple_transactions():
         {"description": "Monthly subscription"},
         {"description": "Transfer to account"},
     ]
+
 
 @pytest.fixture
 def mock_transaction():
@@ -55,6 +57,7 @@ def mock_transaction():
         "to": "Счет 35383033474447895560",
     }
 
+
 @pytest.fixture
 def main_transactions():
     return [
@@ -62,22 +65,12 @@ def main_transactions():
             "date": "2023-05-15",
             "description": "Payment",
             "state": "EXECUTED",
-            "operationAmount": {
-                "amount": "100.00",
-                "currency": {
-                    "code": "RUB"
-                }
-            }
+            "operationAmount": {"amount": "100.00", "currency": {"code": "RUB"}},
         },
         {
             "date": "2023-05-10",
             "description": "Shopping",
             "state": "CANCELED",
-            "operationAmount": {
-                "amount": "50.00",
-                "currency": {
-                    "code": "USD"
-                }
-            }
-        }
+            "operationAmount": {"amount": "50.00", "currency": {"code": "USD"}},
+        },
     ]

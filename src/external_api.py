@@ -1,4 +1,5 @@
 import os
+
 import requests
 from dotenv import load_dotenv
 
@@ -20,9 +21,9 @@ def calculate_transaction_amount(transaction):
                Возвращает None в случае ошибки.
     """
     try:
-        operation_amount = transaction['operationAmount']
-        amount_str = operation_amount['amount']
-        currency_code = operation_amount['currency']['code']
+        operation_amount = transaction["operationAmount"]
+        amount_str = operation_amount["amount"]
+        currency_code = operation_amount["currency"]["code"]
 
         if not isinstance(amount_str, str) or not isinstance(currency_code, str):
             print("Ошибка: Некорректные данные транзакции")

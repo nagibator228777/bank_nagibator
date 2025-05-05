@@ -1,8 +1,10 @@
 import re
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 
-def filter_transactions_by_description(transactions: List[Dict[str, Any]], search_pattern: str) -> List[Dict[str, Any]]:
+def filter_transactions_by_description(
+    transactions: List[Dict[str, Any]], search_pattern: str
+) -> List[Dict[str, Any]]:
     """
     Фильтрует транзакции по совпадению с регулярным выражением в описании.
 

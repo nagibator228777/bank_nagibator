@@ -1,8 +1,9 @@
 import os
+from unittest.mock import Mock, patch
 
 import pytest
-from unittest.mock import patch, Mock
 import requests
+
 from src.external_api import calculate_transaction_amount
 
 
@@ -16,14 +17,7 @@ def mock_env(monkeypatch):
 
 def test_rub_transaction():
     """Тест для транзакции в рублях (без конвертации)"""
-    transaction = {
-        "operationAmount": {
-            "amount": "500.00",
-            "currency": {
-                "code": "RUB"
-            }
-        }
-    }
+    transaction = {"operationAmount": {"amount": "500.00", "currency": {"code": "RUB"}}}
     assert calculate_transaction_amount(transaction) == 500.00
 
 
@@ -57,38 +51,19 @@ def test_calculate_transaction_amount_usd(mock_env):
 
 def test_invalid_amount_format():
     """Тест с некорректным форматом суммы"""
-    transaction = {
-        "operationAmount": {
-            "amount": "not_a_number",
-            "currency": {
-                "code": "USD"
-            }
-        }
-    }
+    transaction = {"operationAmount": {"amount": "not_a_number", "currency": {"code": "USD"}}}
     assert calculate_transaction_amount(transaction) is None
 
 
 def test_unsupported_currency():
     """Тест с неподдерживаемой валютой"""
-    transaction = {
-        "operationAmount": {
-            "amount": "100.00",
-            "currency": {
-                "code": "GBP"
-            }
-        }
-    }
+    transaction = {"operationAmount": {"amount": "100.00", "currency": {"code": "GBP"}}}
     assert calculate_transaction_amount(transaction) is None
 
 
 def test_missing_currency_code():
     """Тест с отсутствующим кодом валюты"""
-    transaction = {
-        "operationAmount": {
-            "amount": "100.00",
-            "currency": {}
-        }
-    }
+    transaction = {"operationAmount": {"amount": "100.00", "currency": {}}}
     assert calculate_transaction_amount(transaction) is None
 
 
@@ -98,14 +73,14 @@ def test_missing_operation_amount():
     assert calculate_transaction_amount(transaction) is None
 
 
-@patch('src.external_api.requests.get')
+@patch("src.external_api.requests.get")
 def test_api_failure(mock_get, mock_transaction):
     """Тест с ошибкой API"""
     mock_response = Mock()
     mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError("API Error")
     mock_get.return_value = mock_response
 
-    with patch('src.external_api.os.getenv', return_value="test_api_key"):
+    with patch("src.external_api.os.getenv", return_value="test_api_key"):
         result = calculate_transaction_amount(mock_transaction)
 
     assert result is None
@@ -113,12 +88,5 @@ def test_api_failure(mock_get, mock_transaction):
 
 def test_invalid_amount_type():
     """Тест с некорректным типом суммы (не строка)"""
-    transaction = {
-        "operationAmount": {
-            "amount": 100.00,  # Должно быть строкой
-            "currency": {
-                "code": "USD"
-            }
-        }
-    }
+    transaction = {"operationAmount": {"amount": 100.00, "currency": {"code": "USD"}}}  # Должно быть строкой
     assert calculate_transaction_amount(transaction) is None

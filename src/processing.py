@@ -1,5 +1,5 @@
-from typing import Any, Dict, List
 from collections import Counter
+from typing import Any, Dict, List
 
 
 def filter_by_state(operations: List[Dict[str, Any]], state: str = "EXECUTED") -> List[Dict[str, Any]]:
@@ -30,8 +30,7 @@ def sort_by_date(operations: List[Dict[str, Any]], reverse: bool = True) -> List
     return sorted(operations, key=lambda x: x.get("date", ""), reverse=reverse)
 
 
-def count_transactions_by_category(transactions: List[Dict[str, Any]],
-                                   categories: List[str]) -> Dict[str, int]:
+def count_transactions_by_category(transactions: List[Dict[str, Any]], categories: List[str]) -> Dict[str, int]:
     """
     Подсчитывает количество транзакций по заданным категориям.
 
@@ -58,8 +57,6 @@ def count_transactions_by_category(transactions: List[Dict[str, Any]],
 
     for category in categories:
         category_lower = category.lower()
-        category_counts[category] = sum(
-            1 for desc in descriptions if category_lower in desc
-        )
+        category_counts[category] = sum(1 for desc in descriptions if category_lower in desc)
 
     return dict(category_counts)

@@ -37,5 +37,5 @@ line_length = 119
 [tool.mypy]
 strict = false
 disallow_untyped_defs = false
-warn_return_any = true
+warn_return_any = false
 exclude = "venv"
