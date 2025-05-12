@@ -3,7 +3,7 @@ import csv
 import pandas as pd
 
 
-def csv_to_list(filepath, delimiter=","):
+def csv_to_list(filepath, delimiter=";"):
     """
     Считывает CSV файл и преобразует его в список строк, где каждая строка -
     это список значений.
@@ -42,7 +42,7 @@ def xlsx_to_list(filepath):
     """
     try:
         df = pd.read_excel(filepath)
-        data = df.values.tolist()
+        data = df.to_dict(orient="records")
         return data
     except FileNotFoundError:
         print(f"Ошибка: Файл '{filepath}' не найден.")

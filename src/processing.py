@@ -50,8 +50,6 @@ def count_transactions_by_category(transactions: List[Dict[str, Any]], categorie
     if not transactions or not categories:
         return {}
 
-    category_counts = {}
-
     category_counts = Counter()
     descriptions = [tx.get("description", "").lower() for tx in transactions]
 
