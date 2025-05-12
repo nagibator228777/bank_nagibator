@@ -1,5 +1,6 @@
 import pytest
-from src.processing import filter_by_state, sort_by_date, count_transactions_by_category
+
+from src.processing import count_transactions_by_category, filter_by_state, sort_by_date
 
 
 class TestProcessing:
@@ -43,11 +44,9 @@ class TestProcessing:
         assert sorted_data[1]["state"] == "B"
         assert sorted_data[2]["state"] == "C"
 
+
 def test_count_by_category(simple_transactions):
-    result = count_transactions_by_category(
-        simple_transactions,
-        ["Payment", "shopping", "subscription"]
-    )
+    result = count_transactions_by_category(simple_transactions, ["Payment", "shopping", "subscription"])
     assert result == {"Payment": 1, "shopping": 1, "subscription": 1}
     assert result["Payment"] == 1  # "Payment" в "Payment for services"
     assert result["shopping"] == 1  # "shopping" в "Grocery shopping"
